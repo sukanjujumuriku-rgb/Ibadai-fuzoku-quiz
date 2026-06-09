@@ -44,7 +44,7 @@ async function loadQuizFile() {
                 question: rows[i][0],
                 choices: [rows[i][1], rows[i][2], rows[i][3], rows[i][4]],
                 answer: Number(rows[i][5]),
-                explanation: rows[i][6] // 🔥 解説対応
+                
             });
         }
 
@@ -244,8 +244,7 @@ function showResult() {
                 <p><b>問題：</b>${r.question}</p>
                 <p><b>あなた：</b>${r.yourAnswer}</p>
                 <p><b>正解：</b>${r.correctAnswer}</p>
-                <p><b>解説：</b>${r.explanation}</p>
-            </div>
+                            </div>
         </details>
         `;
     });

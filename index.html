@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
+
 <body>
 
     <div class="quiz-card">
@@ -29,6 +30,37 @@
             <div id="choices"></div>
 
         </div>
+
+        <!-- 🔥 ここから追加：結果メタ情報（スクショ用） -->
+        <div id="resultMeta" style="display:none; margin-top:15px; padding:10px; border:1px solid #ccc; border-radius:8px;">
+
+            <input id="nickname" placeholder="ニックネーム" />
+
+            <br><br>
+
+            <label>フォント：</label>
+            <select id="fontSelect">
+                <option value="system-ui, sans-serif">標準</option>
+                <option value="'Hiragino Kaku Gothic ProN', Meiryo, sans-serif">ゴシック</option>
+                <option value="'Hiragino Mincho ProN', 'Yu Mincho', serif">明朝</option>
+                <option value="Arial, Helvetica, sans-serif">Arial</option>
+                <option value="'Times New Roman', Georgia, serif">Times</option>
+                <option value="'Courier New', monospace">等幅</option>
+                <option value="Consolas, monospace">Consolas</option>
+                <option value="'Lucida Console', monospace">Lucida Console</option>
+                <option value="'Arial Rounded MT Bold', sans-serif">丸ゴシック</option>
+                <option value="system-ui, -apple-system, BlinkMacSystemFont, sans-serif">モダンUI</option>
+            </select>
+
+            <br><br>
+
+            <label>テーマカラー：</label>
+            <input type="color" id="colorPicker" value="#4caf50">
+
+            <div id="datetime" style="margin-top:10px;"></div>
+
+        </div>
+        <!-- 🔥 追加ここまで -->
 
         <div id="resultArea" style="display:none;"></div>
 

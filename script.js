@@ -224,6 +224,32 @@ function showResult() {
         });
     }
 
+    if(percent === 100){
+
+    fanfareSound.currentTime = 0;
+    fanfareSound.play();
+
+    const duration = 2500;
+    const end = Date.now() + duration;
+
+    (function frame() {
+
+        confetti({
+            particleCount: 6,
+            spread: 160,
+            startVelocity: 35,
+            origin: {
+                x: Math.random(),
+                y: Math.random() * 0.6
+            }
+        });
+
+        if(Date.now() < end){
+            requestAnimationFrame(frame);
+        }
+
+    })();
+}
     let detail = "";
 
     results.forEach((r, i) => {

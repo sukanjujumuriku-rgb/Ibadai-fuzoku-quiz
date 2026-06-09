@@ -256,10 +256,10 @@ function showResult() {
 
         detail += `
         <details>
-            <summary>Q${i + 1}：${r.correct ? "○" : "×"}</summary>
-            <p>${r.question}</p>
-            <p>${r.yourAnswer}</p>
-            <p>${r.correctAnswer}</p>
+            <summary>Q${i + 1}：${r.correct ? "🟢" : "❌"}</summary>
+            <p><b>問題：</b>${r.question}</p>
+            <p><b>あなたの回答：</b>${r.yourAnswer}</p>
+            <p><b>答えの選択肢：</b>${r.correctAnswer}</p>
         </details>
         `;
     });

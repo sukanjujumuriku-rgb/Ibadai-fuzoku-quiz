@@ -208,6 +208,18 @@ function showResult() {
     else if(percent >= 40) rank = "C";
     else rank = "D";
 
+const resultArea = document.getElementById("resultArea");
+
+// 既存クラス削除
+resultArea.classList.remove("rank-s","rank-a","rank-b","rank-c","rank-d");
+
+// ランクに応じて追加
+if(rank === "S") resultArea.classList.add("rank-s");
+else if(rank === "A") resultArea.classList.add("rank-a");
+else if(rank === "B") resultArea.classList.add("rank-b");
+else if(rank === "C") resultArea.classList.add("rank-c");
+else resultArea.classList.add("rank-d");
+    
     const totalSec = Math.floor((endTime - startTime) / 1000);
     const min = Math.floor(totalSec / 60);
     const sec = totalSec % 60;

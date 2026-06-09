@@ -7,27 +7,24 @@ let results = [];
 
 const startBtn = document.getElementById("startBtn");
 
-startBtn.addEventListener("click", loadExcel);
+startBtn.addEventListener("click", loadQuizFile);
 
-function loadExcel() {
+async function loadQuizFile() {
 
-    const file =
-        document.getElementById("excelFile").files[0];
+    startBtn.disabled = true;
+    startBtn.textContent = "読み込み中...";
 
-    if (!file) {
-        alert("Excelファイルを選択してください");
-        return;
-    }
+    try {
 
-    const reader = new FileReader();
+        const response = await fetch("quiz.xlsx");
 
-    reader.onload = function(e) {
-
-        const data =
-            new Uint8Array(e.target.result);
+        const arrayBuffer =
+            await response.arrayBuffer();
 
         const workbook =
-            XLSX.read(data, { type: "array" });
+            XLSX.read(arrayBuffer, {
+                type: "array"
+            });
 
         const sheet =
             workbook.Sheets[
@@ -60,17 +57,17 @@ function loadExcel() {
         }
 
         startQuiz();
-    };
 
-    reader.readAsArrayBuffer(file);
+    } catch(error) {
+
+        alert("quiz.xlsx の読み込みに失敗しました");
+
+        startBtn.disabled = false;
+        startBtn.textContent = "クイズ開始";
+    }
 }
 
 function startQuiz() {
-
-    if(quizData.length < 5){
-        alert("問題数が5問未満です");
-        return;
-    }
 
     selectedQuestions =
         [...quizData]
@@ -80,6 +77,8 @@ function startQuiz() {
     current = 0;
     score = 0;
     results = [];
+
+    startBtn.style.display = "none";
 
     document.getElementById("quizArea").style.display =
         "block";
@@ -92,11 +91,10 @@ function startQuiz() {
 
 function showQuestion() {
 
-    const q =
-        selectedQuestions[current];
+    const q = selectedQuestions[current];
 
     document.getElementById("progress").textContent =
-        `第${current + 1}問 / ${selectedQuestions.length}問`;
+        `第${current + 1}問 / 5問`;
 
     document.getElementById("question").textContent =
         q.question;
@@ -172,18 +170,15 @@ function playEffect(correct){
         [
             {
                 opacity:0,
-                transform:
-                "translate(-50%,-50%) scale(0.5)"
+                transform:"translate(-50%,-50%) scale(0.5)"
             },
             {
                 opacity:1,
-                transform:
-                "translate(-50%,-50%) scale(1.3)"
+                transform:"translate(-50%,-50%) scale(1.3)"
             },
             {
                 opacity:0,
-                transform:
-                "translate(-50%,-50%) scale(2)"
+                transform:"translate(-50%,-50%) scale(2)"
             }
         ],
         {
@@ -212,17 +207,13 @@ function showResult() {
 
     if(percent === 100){
         rank = "S";
-    }
-    else if(percent >= 80){
+    }else if(percent >= 80){
         rank = "A";
-    }
-    else if(percent >= 60){
+    }else if(percent >= 60){
         rank = "B";
-    }
-    else if(percent >= 40){
+    }else if(percent >= 40){
         rank = "C";
-    }
-    else{
+    }else{
         rank = "D";
     }
 
@@ -240,9 +231,7 @@ function showResult() {
     results.forEach((r, i) => {
 
         detail += `
-        <p>
-            ${i + 1}問目 ${r}
-        </p>
+        <p>${i + 1}問目 ${r}</p>
         `;
     });
 

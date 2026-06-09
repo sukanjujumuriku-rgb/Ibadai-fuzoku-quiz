@@ -1,0 +1,175 @@
+/* 全体 */
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:sans-serif;
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* カード */
+
+.quiz-card{
+    background:white;
+    width:90%;
+    max-width:700px;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+/* タイトル */
+
+h1{
+    color:#1e3a8a;
+    margin-bottom:20px;
+}
+
+/* 問題 */
+
+#question{
+    margin:20px 0;
+    font-size:24px;
+    line-height:1.5;
+}
+
+/* 第○問 */
+
+#progress{
+    font-size:18px;
+    color:#666;
+}
+
+/* 選択肢エリア */
+
+#choices{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:20px;
+}
+
+/* ボタン */
+
+button{
+    padding:15px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+
+    transition:
+        transform 0.2s,
+        background 0.2s;
+}
+
+/* マウスを乗せた時 */
+
+button:hover{
+    transform:scale(1.05);
+    background:#1d4ed8;
+}
+
+/* 押した時 */
+
+button:active{
+    transform:scale(0.95);
+}
+
+/* ファイル選択 */
+
+input[type="file"]{
+    margin:15px 0;
+}
+
+/* 結果 */
+
+#resultArea{
+    margin-top:20px;
+}
+
+#resultArea h2{
+    color:#1e3a8a;
+}
+
+#resultArea p{
+    font-size:18px;
+}
+
+/* ○×エフェクト */
+
+#effect{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:150px;
+    font-weight:bold;
+    opacity:0;
+    pointer-events:none;
+    z-index:9999;
+}
+
+/* 正解フラッシュ */
+
+.correct{
+    animation:correctFlash 0.5s;
+}
+
+@keyframes correctFlash{
+    0%{
+        background:white;
+    }
+    50%{
+        background:#b7ffb7;
+    }
+    100%{
+        background:white;
+    }
+}
+
+/* 不正解フラッシュ */
+
+.wrong{
+    animation:wrongFlash 0.5s;
+}
+
+@keyframes wrongFlash{
+    0%{
+        background:white;
+    }
+    50%{
+        background:#ffb7b7;
+    }
+    100%{
+        background:white;
+    }
+}
+
+/* スマホ対応 */
+
+@media(max-width:600px){
+
+    h1{
+        font-size:28px;
+    }
+
+    #question{
+        font-size:20px;
+    }
+
+    button{
+        font-size:16px;
+    }
+
+    #effect{
+        font-size:100px;
+    }
+}

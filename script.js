@@ -5,6 +5,10 @@ let current = 0;
 let score = 0;
 let results = [];
 
+// ⏱ 時間管理
+let startTime = 0;
+let endTime = 0;
+
 // 🔊 音
 const correctSound = new Audio("correct.mp3");
 const wrongSound = new Audio("wrong.mp3");
@@ -60,6 +64,8 @@ async function loadQuizFile() {
 
 function startQuiz() {
 
+    startTime = Date.now(); // ⏱追加
+
     selectedQuestions =
         [...quizData].sort(() => Math.random() - 0.5).slice(0, 5);
 
@@ -71,7 +77,6 @@ function startQuiz() {
 
     document.getElementById("quizArea").style.display = "block";
     document.getElementById("resultArea").style.display = "none";
-    document.getElementById("resultMeta").style.display = "none";
 
     showQuestion();
 }
@@ -186,37 +191,12 @@ function getDateTime() {
 }
 
 // =======================
-// ★重要：ヘッダー更新（増殖防止）
-// =======================
-
-function updateResultHeader() {
-
-    const name = document.getElementById("nickname").value || "名無し";
-    const font = document.getElementById("fontSelect").value;
-    const color = document.getElementById("colorPicker").value;
-
-    const header = document.getElementById("resultHeader");
-
-    header.innerHTML = `
-        <div style="
-            font-family:${font};
-            border-bottom:2px solid ${color};
-            padding-bottom:10px;
-            margin-bottom:15px;
-        ">
-            <h3 style="margin:0;">プレイヤー：${name}</h3>
-            <p style="margin:5px 0; font-size:14px; color:#555;">
-                作成日時：${getDateTime()}
-            </p>
-        </div>
-    `;
-}
-
-// =======================
 // 結果
 // =======================
 
 function showResult() {
+
+    endTime = Date.now(); // ⏱追加
 
     const percent =
         Math.round(score / selectedQuestions.length * 100);
@@ -228,6 +208,11 @@ function showResult() {
     else if(percent >= 60) rank = "B";
     else if(percent >= 40) rank = "C";
     else rank = "D";
+
+    // ⏱ 解答時間
+    const totalSec = Math.floor((endTime - startTime) / 1000);
+    const min = Math.floor(totalSec / 60);
+    const sec = totalSec % 60;
 
     if(percent >= 80){
         fanfareSound.currentTime = 0;
@@ -259,18 +244,13 @@ function showResult() {
 
     resultArea.style.display = "block";
 
-    // 🔥 毎回DOMリセット（超重要）
     resultArea.innerHTML = `
-        <div id="resultHeader"></div>
-
         <h2>🎉 クイズ終了！</h2>
 
         <h3>正答率 ${percent}%</h3>
         <h3>ランク ${rank}</h3>
 
-        <button onclick="takeScreenshot()">
-            📸 スクショして友達に自慢！
-        </button>
+        <h3>解答時間 ${min}分${sec}秒</h3>
 
         ${detail}
 
@@ -278,26 +258,4 @@ function showResult() {
             もう一度挑戦
         </button>
     `;
-
-    // 🔥 ここで確実に更新
-    updateResultHeader();
-}
-
-
-// =======================
-// スクショ（増殖なし）
-// =======================
-
-function takeScreenshot() {
-
-    const name = document.getElementById("nickname").value || "名無し";
-    const target = document.getElementById("resultArea");
-
-    html2canvas(target).then(canvas => {
-
-        const link = document.createElement("a");
-        link.download = `${name}_quiz_result.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    });
 }

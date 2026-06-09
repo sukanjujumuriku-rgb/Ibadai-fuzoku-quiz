@@ -193,9 +193,10 @@ function getDateTime() {
 // =======================
 // 結果
 // =======================
+
 function showResult() {
 
-    endTime = Date.now();
+    endTime = Date.now(); // ⏱追加
 
     const percent =
         Math.round(score / selectedQuestions.length * 100);
@@ -208,55 +209,34 @@ function showResult() {
     else if(percent >= 40) rank = "C";
     else rank = "D";
 
-const resultArea = document.getElementById("resultArea");
+    // ⏱ 解答時間
+    const totalSec = Math.floor((endTime - startTime) / 1000);
+    const min = Math.floor(totalSec / 60);
+    const sec = totalSec % 60;
 
+    if(percent >= 80){
+        fanfareSound.currentTime = 0;
+        fanfareSound.play();
 
-    // =======================
-    // 詳細（見やすく強化）
-    // =======================
+        confetti({
+            particleCount: 200,
+            spread: 120
+        });
+    }
 
     let detail = "";
 
     results.forEach((r, i) => {
 
         detail += `
-        <details style="
-            margin:12px 0;
-            padding:12px;
-            border:1px solid #ddd;
-            border-radius:10px;
-            background:#fafafa;
-        ">
-            <summary style="
-                cursor:pointer;
-                font-weight:bold;
-            ">
-                Q${i + 1}：${r.correct ? "🟢 正解" : "🔴 不正解"}
-            </summary>
-
-            <div style="margin-top:10px; line-height:1.6;">
-
-                <p><b>問題：</b>${r.question}</p>
-
-                <p><b>あなたの回答：</b>${r.yourAnswer}</p>
-
-                <p><b>正解：</b>${r.correctAnswer}</p>
-
-                <p>
-                    <b>判定：</b>
-                    <span style="color:${r.correct ? 'green' : 'red'}; font-weight:bold;">
-                        ${r.correct ? "正解" : "不正解"}
-                    </span>
-                </p>
-
-            </div>
+        <details>
+            <summary>Q${i + 1}：${r.correct ? "○" : "×"}</summary>
+            <p>${r.question}</p>
+            <p>${r.yourAnswer}</p>
+            <p>${r.correctAnswer}</p>
         </details>
         `;
     });
-
-    // =======================
-    // 表示
-    // =======================
 
     document.getElementById("quizArea").style.display = "none";
 
@@ -265,33 +245,16 @@ const resultArea = document.getElementById("resultArea");
     resultArea.style.display = "block";
 
     resultArea.innerHTML = `
-        <div style="
-            background:linear-gradient(135deg,#4facfe,#00f2fe);
-            color:white;
-            padding:20px;
-            border-radius:12px;
-            margin-bottom:15px;
-            text-align:center;
-        ">
-            <h2>🎉 クイズ終了！</h2>
-            <h3>正答率：${percent}%</h3>
-            <h3>ランク：${rank}</h3>
-            <h3>解答時間：${min}分${sec}秒</h3>
-        </div>
+        <h2>🎉 クイズ終了！</h2>
+
+        <h3>正答率 ${percent}%</h3>
+        <h3>ランク ${rank}</h3>
+
+        <h3>解答時間 ${min}分${sec}秒</h3>
 
         ${detail}
 
-        <button onclick="location.reload()" style="
-            margin-top:15px;
-            padding:12px;
-            width:100%;
-            font-size:16px;
-            border:none;
-            border-radius:10px;
-            background:#2563eb;
-            color:white;
-            cursor:pointer;
-        ">
+        <button onclick="location.reload()">
             もう一度挑戦
         </button>
     `;

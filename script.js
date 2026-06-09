@@ -244,13 +244,11 @@ function showResult() {
     results.forEach((r, i) => {
 
         detail += `
-        <details style="margin:10px 0; padding:10px; border:1px solid #ccc; border-radius:10px;">
+        <details>
             <summary>Q${i + 1}：${r.correct ? "○" : "×"}</summary>
-            <div style="margin-top:8px;">
-                <p><b>問題：</b>${r.question}</p>
-                <p><b>あなた：</b>${r.yourAnswer}</p>
-                <p><b>正解：</b>${r.correctAnswer}</p>
-            </div>
+            <p>${r.question}</p>
+            <p>${r.yourAnswer}</p>
+            <p>${r.correctAnswer}</p>
         </details>
         `;
     });
@@ -258,11 +256,10 @@ function showResult() {
     document.getElementById("quizArea").style.display = "none";
 
     const resultArea = document.getElementById("resultArea");
-    const meta = document.getElementById("resultMeta");
 
-    meta.style.display = "block";
     resultArea.style.display = "block";
 
+    // 🔥 毎回DOMリセット（超重要）
     resultArea.innerHTML = `
         <div id="resultHeader"></div>
 
@@ -282,8 +279,10 @@ function showResult() {
         </button>
     `;
 
+    // 🔥 ここで確実に更新
     updateResultHeader();
 }
+
 
 // =======================
 // スクショ（増殖なし）

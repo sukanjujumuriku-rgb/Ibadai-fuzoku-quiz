@@ -7,10 +7,7 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Excel読込用 -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-    <!-- 紙吹雪 -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -18,8 +15,6 @@
     <div class="quiz-card">
 
         <h1>茨大附属中クイズ</h1>
-
-        <input type="file" id="excelFile" accept=".xlsx">
 
         <button id="startBtn">
             クイズ開始
@@ -29,23 +24,16 @@
 
             <p id="progress"></p>
 
-            <h2 id="question">
-                問題がここに表示されます
-            </h2>
+            <h2 id="question"></h2>
 
-            <div id="choices">
-                <!-- 選択肢ボタンがJSで生成される -->
-            </div>
+            <div id="choices"></div>
 
         </div>
 
-        <div id="resultArea" style="display:none;">
-            <!-- 結果画面 -->
-        </div>
+        <div id="resultArea" style="display:none;"></div>
 
     </div>
 
-    <!-- ○×エフェクト -->
     <div id="effect"></div>
 
     <script src="script.js"></script>

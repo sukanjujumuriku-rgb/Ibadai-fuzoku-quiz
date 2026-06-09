@@ -1,4 +1,6 @@
-/* 全体 */
+/* =========================
+   全体
+========================= */
 
 body{
     margin:0;
@@ -11,7 +13,9 @@ body{
     align-items:center;
 }
 
-/* カード */
+/* =========================
+   カード
+========================= */
 
 .quiz-card{
     background:white;
@@ -23,14 +27,18 @@ body{
     text-align:center;
 }
 
-/* タイトル */
+/* =========================
+   タイトル
+========================= */
 
 h1{
     color:#1e3a8a;
     margin-bottom:20px;
 }
 
-/* 問題 */
+/* =========================
+   問題
+========================= */
 
 #question{
     margin:20px 0;
@@ -45,7 +53,9 @@ h1{
     color:#666;
 }
 
-/* 選択肢エリア */
+/* =========================
+   選択肢
+========================= */
 
 #choices{
     display:flex;
@@ -54,7 +64,9 @@ h1{
     margin-top:20px;
 }
 
-/* ボタン */
+/* =========================
+   ボタン
+========================= */
 
 button{
     padding:15px;
@@ -65,45 +77,63 @@ button{
     color:white;
     cursor:pointer;
 
-    transition:
-        transform 0.2s,
-        background 0.2s;
+    transition:transform 0.2s, background 0.2s;
 }
-
-/* マウスを乗せた時 */
 
 button:hover{
     transform:scale(1.05);
     background:#1d4ed8;
 }
 
-/* 押した時 */
-
 button:active{
     transform:scale(0.95);
 }
 
-/* ファイル選択 */
-
-input[type="file"]{
-    margin:15px 0;
-}
-
-/* 結果 */
+/* =========================
+   結果エリア（強化）
+========================= */
 
 #resultArea{
     margin-top:20px;
+    text-align:left;
+    padding:10px;
 }
 
+/* 結果タイトル */
 #resultArea h2{
     color:#1e3a8a;
+    text-align:center;
 }
 
-#resultArea p{
-    font-size:18px;
+
+
+#resultMeta{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* ○×エフェクト */
+#resultMeta input,
+#resultMeta select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+#datetime{
+    margin-top:10px;
+    font-size:14px;
+    color:#555;
+}
+
+/* =========================
+   ○×エフェクト
+========================= */
 
 #effect{
     position:fixed;
@@ -117,59 +147,41 @@ input[type="file"]{
     z-index:9999;
 }
 
-/* 正解フラッシュ */
+/* =========================
+   正解・不正解フラッシュ
+========================= */
 
 .correct{
     animation:correctFlash 0.5s;
 }
 
 @keyframes correctFlash{
-    0%{
-        background:white;
-    }
-    50%{
-        background:#b7ffb7;
-    }
-    100%{
-        background:white;
-    }
+    0%{background:white;}
+    50%{background:#b7ffb7;}
+    100%{background:white;}
 }
-
-/* 不正解フラッシュ */
 
 .wrong{
     animation:wrongFlash 0.5s;
 }
 
 @keyframes wrongFlash{
-    0%{
-        background:white;
-    }
-    50%{
-        background:#ffb7b7;
-    }
-    100%{
-        background:white;
-    }
+    0%{background:white;}
+    50%{background:#ffb7b7;}
+    100%{background:white;}
 }
 
-/* スマホ対応 */
+/* =========================
+   スマホ対応
+========================= */
 
 @media(max-width:600px){
 
-    h1{
-        font-size:28px;
-    }
+    h1{ font-size:28px; }
 
-    #question{
-        font-size:20px;
-    }
+    #question{ font-size:20px; }
 
-    button{
-        font-size:16px;
-    }
+    button{ font-size:16px; }
 
-    #effect{
-        font-size:100px;
-    }
+    #effect{ font-size:100px; }
 }

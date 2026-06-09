@@ -21,49 +21,21 @@
             クイズ開始
         </button>
 
+        <!-- クイズ画面 -->
         <div id="quizArea" style="display:none;">
 
             <p id="progress"></p>
-
             <h2 id="question"></h2>
-
             <div id="choices"></div>
 
         </div>
 
-       
-        <div id="resultMeta" style="display:none; margin-top:15px; padding:10px; border:1px solid #ccc; border-radius:8px;">
+        <!-- 結果画面 -->
+        <div id="resultArea" style="display:none;"></div>
 
-            <input id="nickname" placeholder="ニックネーム" />
-
-            <br><br>
-
-            <label>フォント：</label>
-            <select id="fontSelect">
-                <option value="system-ui, sans-serif">標準</option>
-                <option value="'Hiragino Kaku Gothic ProN', Meiryo, sans-serif">ゴシック</option>
-                <option value="'Hiragino Mincho ProN', 'Yu Mincho', serif">明朝</option>
-                <option value="Arial, Helvetica, sans-serif">Arial</option>
-                <option value="'Times New Roman', Georgia, serif">Times</option>
-                <option value="'Courier New', monospace">等幅</option>
-                <option value="Consolas, monospace">Consolas</option>
-                <option value="'Lucida Console', monospace">Lucida Console</option>
-                <option value="'Arial Rounded MT Bold', sans-serif">丸ゴシック</option>
-                <option value="system-ui, -apple-system, BlinkMacSystemFont, sans-serif">モダンUI</option>
-            </select>
-
-            <br><br>
-
-            <label>テーマカラー：</label>
-            <input type="color" id="colorPicker" value="#4caf50">
-
-            <div id="datetime" style="margin-top:10px;"></div>
-
-        </div>
-        <div id="resultArea" style="display:none;">
-         
     </div>
 
+    <!-- ○×エフェクト -->
     <div id="effect"></div>
 
     <script src="script.js"></script>

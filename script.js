@@ -1,4 +1,3 @@
-
 let quizData = [];
 let selectedQuestions = [];
 
@@ -29,9 +28,7 @@ async function loadQuizFile() {
         const arrayBuffer = await response.arrayBuffer();
 
         const workbook = XLSX.read(arrayBuffer, { type: "array" });
-
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
         const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
         quizData = [];
@@ -43,15 +40,13 @@ async function loadQuizFile() {
             quizData.push({
                 question: rows[i][0],
                 choices: [rows[i][1], rows[i][2], rows[i][3], rows[i][4]],
-                answer: Number(rows[i][5]),
-                
+                answer: Number(rows[i][5])
             });
         }
 
         startQuiz();
 
     } catch(error) {
-
         alert("quiz.xlsx の読み込みに失敗しました");
 
         startBtn.disabled = false;
@@ -115,12 +110,10 @@ function showQuestion() {
 function answer(selected) {
 
     const q = selectedQuestions[current];
-
     const correct = selected === q.answer;
 
     playEffect(correct);
 
-    // 🔊 音
     if(correct){
         correctSound.currentTime = 0;
         correctSound.play();
@@ -134,8 +127,7 @@ function answer(selected) {
         question: q.question,
         yourAnswer: q.choices[selected - 1],
         correctAnswer: q.choices[q.answer - 1],
-        correct: correct,
-        explanation: q.explanation
+        correct: correct
     });
 
     setTimeout(() => {
@@ -159,15 +151,10 @@ function playEffect(correct){
 
     const effect = document.getElementById("effect");
 
-    if(correct){
-        document.body.classList.add("correct");
-        effect.textContent = "○";
-        effect.style.color = "green";
-    }else{
-        document.body.classList.add("wrong");
-        effect.textContent = "×";
-        effect.style.color = "red";
-    }
+    effect.textContent = correct ? "○" : "×";
+    effect.style.color = correct ? "green" : "red";
+
+    document.body.classList.add(correct ? "correct" : "wrong");
 
     effect.animate(
         [
@@ -194,8 +181,35 @@ function getDateTime() {
     return now.getFullYear() + "/" +
         (now.getMonth() + 1) + "/" +
         now.getDate() + " " +
-        now.getHours() + ":" +
-        String(now.getMinutes()).padStart(2, "0");
+        String(now.getHours()).padStart(2,"0") + ":" +
+        String(now.getMinutes()).padStart(2,"0");
+}
+
+// =======================
+// ★重要：ヘッダー更新（増殖防止）
+// =======================
+
+function updateResultHeader() {
+
+    const name = document.getElementById("nickname").value || "名無し";
+    const font = document.getElementById("fontSelect").value;
+    const color = document.getElementById("colorPicker").value;
+
+    const header = document.getElementById("resultHeader");
+
+    header.innerHTML = `
+        <div style="
+            font-family:${font};
+            border-bottom:2px solid ${color};
+            padding-bottom:10px;
+            margin-bottom:15px;
+        ">
+            <h3 style="margin:0;">プレイヤー：${name}</h3>
+            <p style="margin:5px 0; font-size:14px; color:#555;">
+                作成日時：${getDateTime()}
+            </p>
+        </div>
+    `;
 }
 
 // =======================
@@ -215,7 +229,6 @@ function showResult() {
     else if(percent >= 40) rank = "C";
     else rank = "D";
 
-    // 🎊 80%以上
     if(percent >= 80){
         fanfareSound.currentTime = 0;
         fanfareSound.play();
@@ -226,25 +239,18 @@ function showResult() {
         });
     }
 
-    // =======================
-    // 詳細リスト（折りたたみ用）
-    // =======================
-
     let detail = "";
 
     results.forEach((r, i) => {
 
         detail += `
         <details style="margin:10px 0; padding:10px; border:1px solid #ccc; border-radius:10px;">
-            <summary style="cursor:pointer;">
-                Q${i + 1}：${r.correct ? "○" : "×"}
-            </summary>
-
+            <summary>Q${i + 1}：${r.correct ? "○" : "×"}</summary>
             <div style="margin-top:8px;">
                 <p><b>問題：</b>${r.question}</p>
                 <p><b>あなた：</b>${r.yourAnswer}</p>
                 <p><b>正解：</b>${r.correctAnswer}</p>
-                            </div>
+            </div>
         </details>
         `;
     });
@@ -257,15 +263,9 @@ function showResult() {
     meta.style.display = "block";
     resultArea.style.display = "block";
 
-    // 初期設定
-    setTimeout(() => {
-
-        document.getElementById("datetime").textContent =
-            "作成日時: " + getDateTime();
-
-    }, 0);
-
     resultArea.innerHTML = `
+        <div id="resultHeader"></div>
+
         <h2>🎉 クイズ終了！</h2>
 
         <h3>正答率 ${percent}%</h3>
@@ -281,22 +281,18 @@ function showResult() {
             もう一度挑戦
         </button>
     `;
+
+    updateResultHeader();
 }
 
 // =======================
-// スクショ
+// スクショ（増殖なし）
 // =======================
 
 function takeScreenshot() {
 
     const name = document.getElementById("nickname").value || "名無し";
-
     const target = document.getElementById("resultArea");
-
-    const nameTag = document.createElement("h3");
-    nameTag.textContent = "プレイヤー: " + name;
-
-    target.prepend(nameTag);
 
     html2canvas(target).then(canvas => {
 
@@ -304,7 +300,5 @@ function takeScreenshot() {
         link.download = `${name}_quiz_result.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
-
-        nameTag.remove();
     });
 }

@@ -277,6 +277,7 @@ switch(rank){
     fanfareSound.play();
 
     const duration = 3000;
+    const end = Date.now() + duration;
         
     (function frame() {
 
@@ -330,7 +331,7 @@ switch(rank){
             もう一度挑戦
         </button>
     `;
-}
+
 
 setTimeout(() => {
 
@@ -397,6 +398,7 @@ setTimeout(() => {
     },700);
 
 },200);
+}
 
 function shuffle(array) {
 

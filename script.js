@@ -105,6 +105,15 @@ function showQuestion() {
 
         choicesDiv.appendChild(btn);
     });
+
+const quizArea =
+document.getElementById("quizArea");
+
+quizArea.classList.remove("page-turn");
+
+void quizArea.offsetWidth;
+
+quizArea.classList.add("page-turn");
 }
 
 // =======================
@@ -174,6 +183,18 @@ function playEffect(correct){
     }, 500);
 }
 
+function flashEffect(){
+
+    const flash =
+    document.getElementById("flash");
+
+    flash.classList.remove("flash");
+
+    void flash.offsetWidth;
+
+    flash.classList.add("flash");
+}
+
 // =======================
 // 日時
 // =======================
@@ -208,6 +229,31 @@ function showResult() {
     else if(percent >= 40) rank = "C";
     else rank = "D";
 
+let title = "";
+
+switch(rank){
+
+    case "S":
+        title = "👑 附中マスター";
+        break;
+
+    case "A":
+        title = "🥇 附中博士";
+        break;
+
+    case "B":
+        title = "🥈 附中通";
+        break;
+
+    case "C":
+        title = "🥉 挑戦者";
+        break;
+
+    default:
+        title = "🌱 見習い";
+}
+    
+
     // ⏱ 解答時間
     const totalSec = Math.floor((endTime - startTime) / 1000);
     const min = Math.floor(totalSec / 60);
@@ -225,12 +271,13 @@ function showResult() {
 
     if(percent === 100){
 
+    flashEffect();
+
     fanfareSound.currentTime = 0;
     fanfareSound.play();
 
-    const duration = 2500;
-    const end = Date.now() + duration;
-
+    const duration = 3000;
+        
     (function frame() {
 
         confetti({
@@ -273,8 +320,8 @@ function showResult() {
         <h2>🎉 クイズ終了！</h2>
 
         <h3>正答率 ${percent}%</h3>
-        <h3>ランク ${rank}</h3>
-
+        <h1 id="rankDisplay">D</h1>
+        <h2 id="titleDisplay">${title}</h2>
         <h3>解答時間 ${min}分${sec}秒</h3>
 
         ${detail}
@@ -284,6 +331,73 @@ function showResult() {
         </button>
     `;
 }
+
+setTimeout(() => {
+
+    const rankDisplay =
+    document.getElementById("rankDisplay");
+
+    const ranks =
+    ["D","C","B","A","S"];
+
+    let i = 0;
+
+    const goal =
+    ranks.indexOf(rank);
+
+    const timer =
+    setInterval(() => {
+
+        rankDisplay.textContent =
+        ranks[i];
+
+        rankDisplay.classList.remove("rank-pop");
+
+        void rankDisplay.offsetWidth;
+
+        rankDisplay.classList.add("rank-pop");
+
+        i++;
+
+        if(i > goal){
+
+            clearInterval(timer);
+
+            if(rank === "S"){
+
+                flashEffect();
+
+                setTimeout(() => {
+
+                    const end =
+                    Date.now() + 2500;
+
+                    (function frame(){
+
+                        confetti({
+                            particleCount:8,
+                            spread:180,
+                            startVelocity:40,
+                            origin:{
+                                x:Math.random(),
+                                y:Math.random()*0.6
+                            }
+                        });
+
+                        if(Date.now() < end){
+                            requestAnimationFrame(frame);
+                        }
+
+                    })();
+
+                },300);
+            }
+        }
+
+    },700);
+
+},200);
+
 function shuffle(array) {
 
     for (let i = array.length - 1; i > 0; i--) {

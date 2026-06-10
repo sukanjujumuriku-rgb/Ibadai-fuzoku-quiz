@@ -255,10 +255,11 @@ switch(rank){
     
 
     // ⏱ 解答時間
-    const totalSec = Math.floor((endTime - startTime) / 1000);
+    const totalSec = (endTime - startTime) / 1000;
     const min = Math.floor(totalSec / 60);
-    const sec = totalSec % 60;
-
+    const sec =
+        (totalSec % 60).toFixed(2);
+    
     if(percent >= 80){
         fanfareSound.currentTime = 0;
         fanfareSound.play();

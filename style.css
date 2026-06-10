@@ -185,3 +185,97 @@ button:active{
 
     #effect{ font-size:100px; }
 }
+
+/* =========================
+   ページめくり
+========================= */
+
+.page-turn{
+    animation:pageTurn .7s ease;
+}
+
+@keyframes pageTurn{
+
+    0%{
+        opacity:0;
+        transform:
+        perspective(1000px)
+        rotateY(-90deg);
+    }
+
+    100%{
+        opacity:1;
+        transform:
+        perspective(1000px)
+        rotateY(0deg);
+    }
+}
+
+/* =========================
+   閃光
+========================= */
+
+#flash{
+    position:fixed;
+    inset:0;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+    z-index:10000;
+}
+
+.flash{
+    animation:flash .5s;
+}
+
+@keyframes flash{
+
+    0%{
+        opacity:0;
+    }
+
+    40%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+/* =========================
+   ランク演出
+========================= */
+
+#rankDisplay{
+    font-size:5rem;
+    text-align:center;
+    margin:10px 0;
+    color:#f59e0b;
+}
+
+#titleDisplay{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.rank-pop{
+    animation:rankPop .8s ease;
+}
+
+@keyframes rankPop{
+
+    0%{
+        transform:scale(.2);
+        opacity:0;
+    }
+
+    50%{
+        transform:scale(1.4);
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}

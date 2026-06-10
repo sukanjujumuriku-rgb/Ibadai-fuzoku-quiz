@@ -67,8 +67,7 @@ function startQuiz() {
     startTime = Date.now(); // ⏱追加
 
     selectedQuestions =
-        [...quizData].sort(() => Math.random() - 0.5).slice(0, 5);
-
+    shuffle([...quizData]).slice(0, 5);
     current = 0;
     score = 0;
     results = [];

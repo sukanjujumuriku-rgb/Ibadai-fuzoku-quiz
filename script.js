@@ -4,6 +4,7 @@ let selectedQuestions = [];
 let current = 0;
 let score = 0;
 let results = [];
+let answered = false;
 
 // ⏱ 時間管理
 let startTime = 0;
@@ -71,6 +72,7 @@ function startQuiz() {
     current = 0;
     score = 0;
     results = [];
+    answered = false;
 
     startBtn.style.display = "none";
 
@@ -86,7 +88,9 @@ function startQuiz() {
 
 function showQuestion() {
 
+    answered = false;
     const q = selectedQuestions[current];
+   
 
     document.getElementById("progress").textContent =
         `第${current + 1}問 / 5問`;
@@ -122,6 +126,14 @@ quizArea.classList.add("page-turn");
 
 function answer(selected) {
 
+    if(answered) return;
+
+    answered = true;
+
+    document
+        .querySelectorAll("#choices button")
+        .forEach(btn => btn.disabled = true);
+
     const q = selectedQuestions[current];
     const correct = selected === q.answer;
 
@@ -145,15 +157,15 @@ function answer(selected) {
 
     setTimeout(() => {
 
-        current++;
+    if(current >= selectedQuestions.length - 1){
+        showResult();
+        return;
+    }
 
-        if(current < selectedQuestions.length){
-            showQuestion();
-        }else{
-            showResult();
-        }
+    current++;
+    showQuestion();
 
-    }, 800);
+}, 800);
 }
 
 // =======================
